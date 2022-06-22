@@ -105,6 +105,9 @@ public class CuacaAdapter extends RecyclerView.Adapter<CuacaViewHolder> {
                 holder.cuacaImageView.setImageResource(R.mipmap.ic_11n);
                 break;
         }
+
+        String tanggalWaktuWib = formatwib(lm.getDt_txt());
+
         holder.namaTextView.setText(wm.getMain());
         holder.deskripsiTextView.setText(wm.getDescription());
         holder.tglWaktuTextView.setText(lm.getDt_txt());
