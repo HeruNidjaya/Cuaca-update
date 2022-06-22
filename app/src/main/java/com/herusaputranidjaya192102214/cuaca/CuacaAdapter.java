@@ -1,5 +1,6 @@
 package com.herusaputranidjaya192102214.cuaca;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CuacaAdapter extends RecyclerView.Adapter<CuacaViewHolder> {
@@ -107,5 +111,36 @@ public class CuacaAdapter extends RecyclerView.Adapter<CuacaViewHolder> {
         holder.suhuTextView.setText(suhu);
     }
     @Override
-    public int getItemCount() {return (listModelList !=null) ? listModelList.size() : 0;}
+    public int getItemCount()
+    {
+        return (listModelList !=null) ? listModelList.size() : 0;
+    }
+
+    private String formatwib(String tanggalWaktuGmt_string)
+    {
+        Log.d("*tw*", "waktu GMT: " + tanggalWaktuGmt_string);
+        Date tanggalWaktuGmt = null;
+        SimpleDateFormat sdf =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        try
+        {
+            tanggalWaktuGmt = sdf.parse(tanggalWaktuGmt_string);
+        }
+        catch (parseExcepetion e)
+        {
+            Log.e("*tw*", e.getMessage());
+        }
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTime(tanggalWaktuGmt);
+        calendar.add(Calendar.HOUR_OF_DAY,7);
+
+        Date tanggalwaktuwib = calendar.getTime();
+        String tanggalWaktuWib_String = sdf.format(tanggalwaktuwib);
+        tanggalWaktuWib_String = tanggalWaktuGmt_string.replace("00:00", "00 WIB");
+
+        Log.d("*tw*", "Tanggal Waktu Indonesia Barat: " + tanggalWaktuGmt_string);
+
+        return tanggalWaktuGmt_string;
+    }
 }
